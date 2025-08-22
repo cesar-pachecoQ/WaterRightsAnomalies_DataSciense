@@ -1,0 +1,6 @@
+# Ignorar CSV pesados
+DataSets_CSVs/*.csv
+
+# Ignorar cachés de Python
+__pycache__/
+*.pyc
