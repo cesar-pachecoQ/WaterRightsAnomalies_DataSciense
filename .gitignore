@@ -1,6 +1,33 @@
-# Ignorar CSV pesados
-DataSets_CSVs/*.csv
+# Ignorar CSV pesados en DataSets_CSVs
+DataSets_CSVs/df_concesiones.csv
+DataSets_CSVs/df_subterraneas.csv
+DataSets_CSVs/df_superficiales.csv
+
+# Ignorar archivos Parquet
+DataSets_CSVs/DataSets_Parquets/df_concesiones.parquet
+DataSets_CSVs/DataSets_Parquets/df_subterraneas.parquet
+DataSets_CSVs/DataSets_Parquets/df_superficiales.parquet
+
+# Ignorar CSV específicos en DataManager
+DataManager/df_anomalias.csv
+DataManager/nombres_unicos_en_titulares.csv
+DataManager/titulares_unicos.csv
 
 # Ignorar cachés de Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Ignorar archivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignorar archivos del sistema
+.DS_Store
+Thumbs.db

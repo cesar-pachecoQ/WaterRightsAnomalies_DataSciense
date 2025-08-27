@@ -1,1 +1,17 @@
+# Configuración para archivos grandes con Git LFS (si decides usarlo en el futuro)
 *.parquet filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
+
+# Archivos binarios
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+
+# Archivos de Python
+*.py text eol=lf
+*.ipynb text eol=lf
+
+# Archivos de texto
+*.md text eol=lf
+*.txt text eol=lf
