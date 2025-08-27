@@ -4,7 +4,7 @@ Ejemplo de uso de la clase DataConvert mejorada
 Para el proyecto de anomalías en concesiones de agua
 """
 
-from DataManager.DataConvert import DataConvert
+from DataConvert import DataConvert
 import os
 
 def main():
