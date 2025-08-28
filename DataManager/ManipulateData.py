@@ -21,8 +21,12 @@ MERCANTILES_O_INST = {
 }
 
 class ManipulateData:
-    def __init__(self, df: pl.DataFrame):
+    def __init__(self, df: pl.DataFrame, a:str, b:str):
         self.df = df
+        if a is not None:
+            self.a = a
+        if b is not None:
+            self.b = b
 
     def _estandarizar_texto(self,
                             texto: str,
@@ -94,3 +98,63 @@ class ManipulateData:
             ).alias(columna)  
         )
         return self.df
+    
+    def estandarizar_dos_strings(self,
+                                sin_espacios: bool = False,
+                                sin_stopword: bool = False,
+                                sin_terminos_mercantiles: bool = False,
+                                quitar_tokens_1_letra: bool = False) -> tuple[str, str]:
+        """
+        Estandariza los dos strings (a y b) usando la misma lógica de _estandarizar_texto.
+        
+        Returns:
+            tuple[str, str]: Los dos strings estandarizados (a_estandarizado, b_estandarizado)
+        """
+        a_estandarizado = self._estandarizar_texto(
+            self.a,
+            sin_espacios=sin_espacios,
+            sin_stopword=sin_stopword,
+            sin_terminos_mercantiles=sin_terminos_mercantiles,
+            quitar_tokens_1_letra=quitar_tokens_1_letra
+        )
+        
+        b_estandarizado = self._estandarizar_texto(
+            self.b,
+            sin_espacios=sin_espacios,
+            sin_stopword=sin_stopword,
+            sin_terminos_mercantiles=sin_terminos_mercantiles,
+            quitar_tokens_1_letra=quitar_tokens_1_letra
+        )
+        
+        return a_estandarizado, b_estandarizado
+
+    def estandarizar_cadenas(self,
+                         columna: str,
+                         sin_espacios: bool = False,
+                         sin_stopword: bool = False,
+                         sin_terminos_mercantiles: bool = False,
+                         quitar_tokens_1_letra: bool = False) -> list[str]:
+        """
+        Extrae los valores únicos de una columna y los estandariza.
+        
+        Returns:
+            list[str]: Lista de strings únicos estandarizados de la columna especificada
+        """
+        # Obtener valores únicos de la columna
+        valores_unicos = self.df.select(columna).unique().to_series().to_list()
+        
+        # Estandarizar cada valor usando la función interna
+        valores_estandarizados = []
+        for valor in valores_unicos:
+            if valor is not None:  # Evitar valores nulos
+                valor_estandarizado = self._estandarizar_texto(
+                    valor,
+                    sin_espacios=sin_espacios,
+                    sin_stopword=sin_stopword,
+                    sin_terminos_mercantiles=sin_terminos_mercantiles,
+                    quitar_tokens_1_letra=quitar_tokens_1_letra
+                )
+                if valor_estandarizado:  # Solo agregar si no es vacío
+                    valores_estandarizados.append(valor_estandarizado)
+        
+        return valores_estandarizados
